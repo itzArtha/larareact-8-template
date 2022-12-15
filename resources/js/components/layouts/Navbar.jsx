@@ -2,7 +2,7 @@ const Navbar = () => {
     return (
         <>
             <div className={"flex justify-between"}>
-                <div className={"w-72"}>
+                <div className={"w-48"}>
                     <img
                         src={
                             process.env.MIX_APP_URL +

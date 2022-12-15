@@ -2,13 +2,12 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Navbar from "../../../components/layouts/Navbar";
 import Guest from "../../../components/layouts/Guest";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 const Login = () => {
     const history = useHistory();
@@ -22,6 +21,7 @@ const Login = () => {
                     <Box
                         sx={{
                             marginTop: 12,
+                            marginBottom: 16,
                             display: "flex",
                             flexDirection: "column",
                             alignItems: "center",
@@ -81,11 +81,10 @@ const Login = () => {
                             </Button>
                             <div className={"text-center"}>
                                 <Link
-                                    href="#"
-                                    sx={{ textDecoration: "none" }}
-                                    variant="body2"
+                                    to={"/password/reset"}
+                                    className={"text-blue-500"}
                                 >
-                                    Forgot password?
+                                    Forget Password?
                                 </Link>
                             </div>
                             <div className={"my-4 px-4 text-center relative"}>

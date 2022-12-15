@@ -8,19 +8,31 @@ import Container from "@mui/material/Container";
 import Navbar from "../../../components/layouts/Navbar";
 import Guest from "../../../components/layouts/Guest";
 import { useHistory, Link } from "react-router-dom";
+import countries from "../../../../../storage/app/local/countries.json";
+import {
+    Checkbox,
+    FormControl,
+    FormControlLabel,
+    FormLabel,
+    InputLabel,
+    MenuItem,
+    Radio,
+    RadioGroup,
+    Select,
+} from "@mui/material";
 
 const Register = () => {
     const history = useHistory();
 
     return (
         <>
-            <Guest>
+            <Guest imageHeight={"146vh"} bottomFooter={"-bottom-72"}>
                 <Navbar />
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
                     <Box
                         sx={{
-                            marginTop: 12,
+                            marginBottom: 4,
                             display: "flex",
                             flexDirection: "column",
                             alignItems: "center",
@@ -42,7 +54,54 @@ const Register = () => {
                             It's quick and easy.
                         </Typography>
                         <Box component="form" noValidate sx={{ mt: 1 }}>
+                            <InputLabel
+                                id="select-email"
+                                class={"text-[#1565c0] font-bold mt-2"}
+                            >
+                                Email Address
+                            </InputLabel>
                             <TextField
+                                sx={{
+                                    label: { color: "#1565c0" },
+                                }}
+                                className={"bg-blue-50 border-0 mt-0"}
+                                margin="normal"
+                                required
+                                fullWidth
+                                type="email"
+                                id="email"
+                                labelId="select-email"
+                                name="email"
+                                InputLabelProps={{ shrink: true }}
+                                autoFocus
+                            />
+                            <InputLabel
+                                id="select-unhcr"
+                                class={"text-[#1565c0] font-bold mt-2"}
+                            >
+                                UNHCR Number
+                            </InputLabel>
+                            <TextField
+                                sx={{
+                                    label: { color: "#1565c0" },
+                                }}
+                                className={"bg-blue-50 border-0 mt-0"}
+                                margin="normal"
+                                required
+                                fullWidth
+                                labelId="select-unhcr"
+                                type="text"
+                                id="unhcr"
+                                name="unhcr"
+                                InputLabelProps={{ shrink: true }}
+                            />
+                            <InputLabel
+                                id="select-country"
+                                class={"text-[#1565c0] font-bold mt-2"}
+                            >
+                                Country of Origin
+                            </InputLabel>
+                            <Select
                                 sx={{
                                     label: { color: "#1565c0" },
                                 }}
@@ -50,25 +109,137 @@ const Register = () => {
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
-                                autoFocus
-                            />
+                                labelId="select-country"
+                                id="country"
+                                name="country"
+                            >
+                                {countries.map((item) => (
+                                    <MenuItem value={item.name}>
+                                        {item.name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                            <InputLabel
+                                id="select-birthdate"
+                                class={"text-[#1565c0] font-bold mt-3"}
+                            >
+                                Birthdate
+                            </InputLabel>
                             <TextField
                                 sx={{
                                     label: { color: "#1565c0" },
                                 }}
-                                className={"bg-blue-50"}
+                                className={"bg-blue-50 border-0 mt-0"}
+                                margin="normal"
+                                labelId="select-birthdate"
+                                required
+                                fullWidth
+                                type="date"
+                                id="birthdate"
+                                name="birthdate"
+                                InputLabelProps={{ shrink: true }}
+                            />
+                            <div>
+                                <FormControl>
+                                    <FormLabel
+                                        className={
+                                            "text-[#1565c0] mt-2 font-bold"
+                                        }
+                                        sx={{
+                                            color: "#1565c0",
+                                            fontWeight: "700",
+                                        }}
+                                        id="demo-row-radio-buttons-group-label"
+                                    >
+                                        Sex
+                                    </FormLabel>
+                                    <RadioGroup
+                                        row
+                                        aria-labelledby="demo-row-radio-buttons-group-label"
+                                        name="row-radio-buttons-group"
+                                    >
+                                        <FormControlLabel
+                                            className={"text-[#1565c0]"}
+                                            value="female"
+                                            control={<Radio />}
+                                            label="Female"
+                                        />
+                                        <FormControlLabel
+                                            className={"text-[#1565c0]"}
+                                            value="male"
+                                            control={<Radio />}
+                                            label="Male"
+                                        />
+                                        <FormControlLabel
+                                            className={"text-[#1565c0]"}
+                                            value="other"
+                                            control={<Radio />}
+                                            label="Prefer not to say"
+                                        />
+                                    </RadioGroup>
+                                </FormControl>
+                            </div>
+                            <InputLabel
+                                id="select-password"
+                                class={"text-[#1565c0] font-bold mt-2"}
+                            >
+                                Password
+                            </InputLabel>
+                            <TextField
+                                sx={{
+                                    label: { color: "#1565c0" },
+                                }}
+                                className={"bg-blue-50 mt-0"}
                                 margin="normal"
                                 required
                                 fullWidth
                                 name="password"
-                                label="Password"
                                 type="password"
+                                labelId="select-password"
                                 id="password"
-                                autoComplete="current-password"
+                                InputLabelProps={{ shrink: true }}
+                            />
+                            <FormControlLabel
+                                className={"text-[#1565c0] text-xs"}
+                                value="end"
+                                control={<Checkbox />}
+                                label={
+                                    <Typography variant="body3" color="primary">
+                                        Bullyid Indonesia provides a national
+                                        Helpline service that facilitates mental
+                                        health and psychological counselling,
+                                        information sharing and referral
+                                        services for refugees and asylum
+                                        seekers. Participation is completely
+                                        voluntary and will not affect your
+                                        access to humanitarian assistance in any
+                                        way. I agree to participate in this
+                                        helpline service voluntarily. I
+                                        understand and agree that my answers,
+                                        including personal data, will be
+                                        collected, used and otherwise processed
+                                        for the provision of psychosocial
+                                        assistance and counselling offered by
+                                        Bullyid Indonesia. I understand that my
+                                        personal data will be collected, used,
+                                        retained and otherwise processed by
+                                        Bullyid Indonesia. The collected data
+                                        will be encrypted and will be kept
+                                        confidential. The data will only be
+                                        disclosed to Bullyid Indonesia
+                                        authorized staff members. No personal
+                                        data will be shared with third parties.
+                                        By clicking this box, I hereby authorize
+                                        Bullyid Indonesia to collect, use,
+                                        disclose and otherwise process my
+                                        personal data obtained through this
+                                        helpline service. For any questions,
+                                        requests or complaints concerning your
+                                        personal data, please contact Bullyid
+                                        Indonesia at legal@bullyid.org.
+                                    </Typography>
+                                }
+                                labelPlacement="end"
                             />
                             <Button
                                 type="submit"

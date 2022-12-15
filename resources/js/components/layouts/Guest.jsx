@@ -3,8 +3,13 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import * as url from "url";
 import SimpleFooter from "../footer/SimpleFooter";
 
-const Guest = ({ children }) => {
+const Guest = ({ children, imageHeight, bottomFooter }) => {
     const theme = createTheme({
+        radio: {
+            "&$checked": {
+                color: "#1565c0",
+            },
+        },
         palette: {
             primary: {
                 main: "#1565c0",
@@ -24,7 +29,7 @@ const Guest = ({ children }) => {
                 backgroundPosition: "left",
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
-                height: "100vh",
+                height: imageHeight ?? "100vh",
                 color: "#f5f5f5",
             }}
         >
@@ -38,7 +43,7 @@ const Guest = ({ children }) => {
                 }}
             >
                 <ThemeProvider theme={theme}>{children}</ThemeProvider>
-                <SimpleFooter />
+                <SimpleFooter bottomFooter={bottomFooter} />
             </div>
         </div>
     );
