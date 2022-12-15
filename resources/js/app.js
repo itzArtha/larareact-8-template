@@ -4,18 +4,18 @@
  * building robust, powerful web applications using React + Laravel.
  */
 
-import {BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
-require('./bootstrap');
-require('./routes/Routes')
+require("./bootstrap");
+require("./routes/Web");
 import ReactDOM from "react-dom";
 import React from "react";
-import Routes from "./routes/Routes";
+import Web from "./routes/Web";
 
 ReactDOM.render(
     <BrowserRouter>
         <React.StrictMode>
-            <Routes/>
+            <Web />
         </React.StrictMode>
     </BrowserRouter>,
     document.getElementById("app")
