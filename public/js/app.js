@@ -28085,7 +28085,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var ResetPassword = function ResetPassword() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_components_layouts_Guest__WEBPACK_IMPORTED_MODULE_0__["default"], {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_components_layouts_Navbar__WEBPACK_IMPORTED_MODULE_1__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_mui_material_Container__WEBPACK_IMPORTED_MODULE_3__["default"], {
