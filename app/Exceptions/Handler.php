@@ -2,11 +2,13 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\Traits\CustomResponseException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    use CustomResponseException;
     /**
      * A list of the exception types that are not reported.
      *
@@ -37,5 +39,17 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    /**
+     * List of url path that use custom Exception Format. You can use Regex in the list
+     *
+     * @return array<string>
+     */
+    protected function urlPathPattern()
+    {
+        return [
+            'api.*',
+        ];
     }
 }

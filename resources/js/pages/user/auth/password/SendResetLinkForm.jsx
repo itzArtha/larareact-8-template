@@ -1,9 +1,25 @@
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import { sendResetPasswordLink } from "../../../../actions/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { useParams } from "react-router-dom";
 
 const SendResetLinkForm = ({ setIsLinkSent }) => {
+    const dispatch = useDispatch();
+
+    const [email, setEmail] = useState("");
+
+    const { status } = useSelector((state) => state.message);
+
+    const handleSendResetPassword = () => {
+        dispatch(sendResetPasswordLink(email)).then(() => {
+            setIsLinkSent(true);
+        });
+    };
+
     return (
         <>
             <Box
@@ -31,6 +47,10 @@ const SendResetLinkForm = ({ setIsLinkSent }) => {
                         sx={{
                             label: { color: "#1565c0" },
                         }}
+                        value={email}
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                        }}
                         className={"bg-blue-50 border-0"}
                         margin="normal"
                         required
@@ -41,17 +61,18 @@ const SendResetLinkForm = ({ setIsLinkSent }) => {
                         autoComplete="email"
                         autoFocus
                     />
-                    <Button
+                    <LoadingButton
                         onClick={() => {
-                            setIsLinkSent(true);
+                            handleSendResetPassword();
                         }}
-                        type="submit"
+                        loading={status}
+                        type="button"
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
                         Send Reset Password Link
-                    </Button>
+                    </LoadingButton>
                 </Box>
             </Box>
         </>

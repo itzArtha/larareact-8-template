@@ -18,7 +18,7 @@ const Web = () => {
                     exact
                 />
                 <Route
-                    path={"/password/:token/reset"}
+                    path={"/password/reset/:token"}
                     component={ResetPassword}
                     exact
                 />

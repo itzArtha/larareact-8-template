@@ -20,9 +20,40 @@ import {
     RadioGroup,
     Select,
 } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../../actions/auth";
+import { useState } from "react";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const Register = () => {
+    const [userData, setUserData] = useState({
+        email: "",
+        unhcr: "",
+        birthdate: "",
+        country: "",
+        sex: "",
+        password: "",
+    });
+
+    const [loading, setLoading] = useState(false);
+
     const history = useHistory();
+    const dispatch = useDispatch();
+
+    const { isLoggedIn } = useSelector((state) => state.auth);
+
+    if (isLoggedIn) history.push("/");
+
+    const handleRegister = () => {
+        setLoading(true);
+        dispatch(register(userData))
+            .then(() => {
+                history.push("/");
+            })
+            .catch(() => {
+                setLoading(false);
+            });
+    };
 
     return (
         <>
@@ -56,7 +87,7 @@ const Register = () => {
                         <Box component="form" noValidate sx={{ mt: 1 }}>
                             <InputLabel
                                 id="select-email"
-                                class={"text-[#1565c0] font-bold mt-2"}
+                                className={"text-[#1565c0] font-bold mt-2"}
                             >
                                 Email Address
                             </InputLabel>
@@ -65,19 +96,25 @@ const Register = () => {
                                     label: { color: "#1565c0" },
                                 }}
                                 className={"bg-blue-50 border-0 mt-0"}
-                                margin="normal"
                                 required
                                 fullWidth
                                 type="email"
+                                onChange={(e) =>
+                                    setUserData({
+                                        ...userData,
+                                        email: e.target.value,
+                                    })
+                                }
+                                value={userData.email}
                                 id="email"
-                                labelId="select-email"
+                                labelid="select-email"
                                 name="email"
                                 InputLabelProps={{ shrink: true }}
                                 autoFocus
                             />
                             <InputLabel
                                 id="select-unhcr"
-                                class={"text-[#1565c0] font-bold mt-2"}
+                                className={"text-[#1565c0] font-bold mt-2"}
                             >
                                 UNHCR Number
                             </InputLabel>
@@ -86,10 +123,16 @@ const Register = () => {
                                     label: { color: "#1565c0" },
                                 }}
                                 className={"bg-blue-50 border-0 mt-0"}
-                                margin="normal"
                                 required
                                 fullWidth
-                                labelId="select-unhcr"
+                                labelid="select-unhcr"
+                                onChange={(e) =>
+                                    setUserData({
+                                        ...userData,
+                                        unhcr: e.target.value,
+                                    })
+                                }
+                                value={userData.unhcr}
                                 type="text"
                                 id="unhcr"
                                 name="unhcr"
@@ -97,7 +140,7 @@ const Register = () => {
                             />
                             <InputLabel
                                 id="select-country"
-                                class={"text-[#1565c0] font-bold mt-2"}
+                                className={"text-[#1565c0] font-bold mt-2"}
                             >
                                 Country of Origin
                             </InputLabel>
@@ -106,22 +149,28 @@ const Register = () => {
                                     label: { color: "#1565c0" },
                                 }}
                                 className={"bg-blue-50 border-0"}
-                                margin="normal"
                                 required
                                 fullWidth
-                                labelId="select-country"
+                                onChange={(e) =>
+                                    setUserData({
+                                        ...userData,
+                                        country: e.target.value,
+                                    })
+                                }
+                                value={userData.country}
+                                labelid="select-country"
                                 id="country"
                                 name="country"
                             >
-                                {countries.map((item) => (
-                                    <MenuItem value={item.name}>
+                                {countries.map((item, i) => (
+                                    <MenuItem key={i} value={item.name}>
                                         {item.name}
                                     </MenuItem>
                                 ))}
                             </Select>
                             <InputLabel
                                 id="select-birthdate"
-                                class={"text-[#1565c0] font-bold mt-3"}
+                                className={"text-[#1565c0] font-bold mt-3"}
                             >
                                 Birthdate
                             </InputLabel>
@@ -130,10 +179,16 @@ const Register = () => {
                                     label: { color: "#1565c0" },
                                 }}
                                 className={"bg-blue-50 border-0 mt-0"}
-                                margin="normal"
-                                labelId="select-birthdate"
+                                labelid="select-birthdate"
                                 required
                                 fullWidth
+                                onChange={(e) =>
+                                    setUserData({
+                                        ...userData,
+                                        birthdate: e.target.value,
+                                    })
+                                }
+                                value={userData.birthdate}
                                 type="date"
                                 id="birthdate"
                                 name="birthdate"
@@ -157,6 +212,13 @@ const Register = () => {
                                         row
                                         aria-labelledby="demo-row-radio-buttons-group-label"
                                         name="row-radio-buttons-group"
+                                        onChange={(e) =>
+                                            setUserData({
+                                                ...userData,
+                                                sex: e.target.value,
+                                            })
+                                        }
+                                        value={userData.sex}
                                     >
                                         <FormControlLabel
                                             className={"text-[#1565c0]"}
@@ -172,7 +234,7 @@ const Register = () => {
                                         />
                                         <FormControlLabel
                                             className={"text-[#1565c0]"}
-                                            value="other"
+                                            value="others"
                                             control={<Radio />}
                                             label="Prefer not to say"
                                         />
@@ -181,7 +243,7 @@ const Register = () => {
                             </div>
                             <InputLabel
                                 id="select-password"
-                                class={"text-[#1565c0] font-bold mt-2"}
+                                className={"text-[#1565c0] font-bold mt-2"}
                             >
                                 Password
                             </InputLabel>
@@ -190,12 +252,18 @@ const Register = () => {
                                     label: { color: "#1565c0" },
                                 }}
                                 className={"bg-blue-50 mt-0"}
-                                margin="normal"
                                 required
                                 fullWidth
+                                onChange={(e) =>
+                                    setUserData({
+                                        ...userData,
+                                        password: e.target.value,
+                                    })
+                                }
+                                value={userData.password}
                                 name="password"
                                 type="password"
-                                labelId="select-password"
+                                labelid="select-password"
                                 id="password"
                                 InputLabelProps={{ shrink: true }}
                             />
@@ -241,14 +309,18 @@ const Register = () => {
                                 }
                                 labelPlacement="end"
                             />
-                            <Button
-                                type="submit"
+                            <LoadingButton
+                                type="button"
+                                onClick={() => {
+                                    handleRegister();
+                                }}
+                                loading={loading}
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
                             >
                                 Sign Up
-                            </Button>
+                            </LoadingButton>
                             <div className={"text-center"}>
                                 <Link to={"/login"} className={"text-blue-500"}>
                                     Already have an account?

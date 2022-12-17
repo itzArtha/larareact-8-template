@@ -1,5 +1,6 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -8,9 +9,32 @@ import Container from "@mui/material/Container";
 import Navbar from "../../../components/layouts/Navbar";
 import Guest from "../../../components/layouts/Guest";
 import { useHistory, Link } from "react-router-dom";
+import { useState } from "react";
+import { login } from "../../../actions/auth";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
     const history = useHistory();
+    const dispatch = useDispatch();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const { message } = useSelector((state) => state.message);
+    const { isLoggedIn } = useSelector((state) => state.auth);
+
+    if (isLoggedIn) history.push("/");
+
+    const handleLogin = () => {
+        setLoading(true);
+        dispatch(login(email, password))
+            .then(() => {
+                history.push("/");
+            })
+            .catch(() => {
+                setLoading(false);
+            });
+    };
 
     return (
         <>
@@ -54,8 +78,13 @@ const Login = () => {
                                 id="email"
                                 label="Email Address"
                                 name="email"
+                                onChange={(e) => {
+                                    setEmail(e.target.value);
+                                }}
+                                value={email}
                                 autoComplete="email"
                                 autoFocus
+                                error={!!message}
                             />
                             <TextField
                                 sx={{
@@ -65,20 +94,25 @@ const Login = () => {
                                 margin="normal"
                                 required
                                 fullWidth
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                }}
+                                value={password}
                                 name="password"
                                 label="Password"
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
                             />
-                            <Button
-                                type="submit"
+                            <LoadingButton
+                                loading={loading}
+                                onClick={handleLogin}
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
                             >
                                 Sign In
-                            </Button>
+                            </LoadingButton>
                             <div className={"text-center"}>
                                 <Link
                                     to={"/password/reset"}

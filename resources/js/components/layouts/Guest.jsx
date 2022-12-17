@@ -2,6 +2,7 @@ import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import * as url from "url";
 import SimpleFooter from "../footer/SimpleFooter";
+import { Toaster } from "react-hot-toast";
 
 const Guest = ({ children, imageHeight, bottomFooter }) => {
     const theme = createTheme({
@@ -42,6 +43,7 @@ const Guest = ({ children, imageHeight, bottomFooter }) => {
                     color: "white",
                 }}
             >
+                <Toaster position="top-center" reverseOrder={false} />
                 <ThemeProvider theme={theme}>{children}</ThemeProvider>
                 <SimpleFooter bottomFooter={bottomFooter} />
             </div>
